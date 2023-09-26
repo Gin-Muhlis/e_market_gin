@@ -4,15 +4,18 @@
     <div class="container">
         <div class="searchbar mt-0 mb-4">
             <div class="row">
-                <div class="col-md-12 text-left">
+                <div class="col-md-6 text-left">
                     @can('create', App\Models\Produk::class)
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#form-modal"
                             data-mode="add">
                             <i class="icon ion-md-add"></i> Tambah
                         </button>
                     @endcan
-                    <a href="{{ route('produks.export') }}" class="btn btn-success">Download Excel</a>
-                    <button class="btn-import btn btn-primary">Import Excel</button>
+                    
+                    <button class="btn-import btn btn-primary"><i class="fa-solid fa-file mr-1"></i>Import Excel</button>
+                </div>
+                <div class="col-md-6 text-right">
+                    <a href="{{ route('produks.export') }}" class="btn btn-success"><i class="fa-solid fa-file mr-1"></i>Download Excel</a>
                 </div>
             </div>
         </div>
@@ -68,14 +71,13 @@
                                 </tr>
                             @endforelse
                         </tbody>
-                       y7[]
                     </table>
                 </div>
             </div>
         </div>
     </div>
     @include('app.produks.form-inputs')
-    <form action="{{ route('pembelian.import') }}" method="post">
+    <form action="{{ route('produk.import') }}" method="post" class="form-import d-none" enctype="multipart/form-data">
         @csrf
         <input type='file' name='file' id="file">
     </form>
@@ -84,6 +86,13 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
+            $(".btn-import").on("click", () => {
+                $("#file").click()
+            })
+
+            $("#file").on("input", () => {
+                $(".form-import").submit()
+            })
             $("#form-modal").on("show.bs.modal", event => {
                 const btn = $(event.relatedTarget)
                 const modal = $(this)

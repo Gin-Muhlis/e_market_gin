@@ -7,6 +7,7 @@ use App\Models\Produk;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Exports\ProdukExport;
+use App\Imports\ProdukImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\ProdukStoreRequest;
@@ -114,5 +115,11 @@ class ProdukController extends Controller
     public function export() {
         $tanggal = Carbon::now()->format('Y-m-d');
         return Excel::download(new ProdukExport, "produk_$tanggal.xlsx");
+    }
+
+    public function import(Request $request) {
+        $file = $request->file;
+        Excel::import(new ProdukImport, $file);
+        return redirect()->back()->with('success', 'Import data berhasil');
     }
 }

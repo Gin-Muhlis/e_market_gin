@@ -55,7 +55,7 @@ Route::prefix('/')
 
         Route::get('produk-export', [ProdukController::class, 'export'])->name('produks.export');
         Route::get('pembelian-export', [PembelianController::class, 'export'])->name('pembelians.export');
-        Route::post('pembelian-import', [PembelianController::class, 'import'])->name('pembelian.import');
+        Route::post('produk-import', [ProdukController::class, 'import'])->name('produk.import');
     });
     Route::get('pembelian/faktur/{id}', [PembelianController::class, 'faktur']);
 
