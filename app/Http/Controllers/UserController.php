@@ -20,14 +20,12 @@ class UserController extends Controller
     {
         $this->authorize('view-any', User::class);
 
-        $search = $request->get('search', '');
+        $users = User::get();        
+            
+            
+            $roles = Role::get();
 
-        $users = User::search($search)
-            ->latest()
-            ->paginate(5)
-            ->withQueryString();
-
-        return view('app.users.index', compact('users', 'search'));
+        return view('app.users.index', compact('users', 'roles'));
     }
 
     /**
@@ -57,8 +55,7 @@ class UserController extends Controller
 
         $user->syncRoles($request->roles);
 
-        return redirect()
-            ->route('users.edit', $user)
+        return redirect()->back()
             ->withSuccess(__('crud.common.created'));
     }
 
@@ -80,6 +77,7 @@ class UserController extends Controller
         $this->authorize('update', $user);
 
         $roles = Role::get();
+        
 
         return view('app.users.edit', compact('user', 'roles'));
     }
@@ -105,9 +103,7 @@ class UserController extends Controller
 
         $user->syncRoles($request->roles);
 
-        return redirect()
-            ->route('users.edit', $user)
-            ->withSuccess(__('crud.common.saved'));
+        return redirect()->back()->with('success', 'User berhasil dibuat');
     }
 
     /**
@@ -119,8 +115,7 @@ class UserController extends Controller
 
         $user->delete();
 
-        return redirect()
-            ->route('users.index')
+        return redirect()->back()
             ->withSuccess(__('crud.common.removed'));
     }
 }

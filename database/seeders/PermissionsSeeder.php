@@ -57,12 +57,6 @@ class PermissionsSeeder extends Seeder
         Permission::create(['name' => 'update pemasoks']);
         Permission::create(['name' => 'delete pemasoks']);
 
-        Permission::create(['name' => 'list pembelians']);
-        Permission::create(['name' => 'view pembelians']);
-        Permission::create(['name' => 'create pembelians']);
-        Permission::create(['name' => 'update pembelians']);
-        Permission::create(['name' => 'delete pembelians']);
-
         Permission::create(['name' => 'list penjualans']);
         Permission::create(['name' => 'view penjualans']);
         Permission::create(['name' => 'create penjualans']);
@@ -121,6 +115,13 @@ class PermissionsSeeder extends Seeder
         $allPermissions = Permission::all();
         $adminRole = Role::create(['name' => 'super-admin']);
         $adminRole->givePermissionTo($allPermissions);
+        
+        Permission::create(['name' => 'list pembelians']);
+        Permission::create(['name' => 'view pembelians']);
+        Permission::create(['name' => 'create pembelians']);
+        Permission::create(['name' => 'update pembelians']);
+        Permission::create(['name' => 'delete pembelians']);
+
 
         $user = \App\Models\User::whereEmail('technoadmin@admin.com')->first();
 

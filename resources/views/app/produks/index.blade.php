@@ -102,7 +102,7 @@
                         modal.find(".modal-title").text("Tambah Data Produk")
                         modal.find("#method").html("")
                         modal.find("#nama_produk").val("")
-                        modal.find(".modal-body form").attr("action", "/produks")
+                        modal.find(".modal-body form").attr("action", "{{ url('/produks') }}")
                         break;
                     case "edit":
                         let nama = $(btn).data("nama")
@@ -110,7 +110,7 @@
                         modal.find(".modal-title").text("Edit Data Produk")
                         modal.find("#method").html(`@method("PUT")`)
                         modal.find("#nama_produk").val(nama)
-                        modal.find(".modal-body form").attr("action", `/produks/${id}`)
+                        modal.find(".modal-body form").attr("action", `{{ url('/produks') }}/${id}`)
                     default:
                         break;
                 }

@@ -88,7 +88,7 @@
                         modal.find(".modal-title").text("Tambah Data Pemasok")
                         modal.find("#method").html("")
                         setValue()
-                        modal.find(".modal-body form").attr("action", `{{ url('pemasoks') }}`)
+                        modal.find(".modal-body form").attr("action", `{{ url('/pemasoks') }}`)
                         break;
                     case "edit":
                         const idPemasok = btn.data("id")
@@ -96,7 +96,7 @@
                         modal.find(".modal-title").text("Edit Data Pemasok")
                         modal.find("#method").html(`@method('PUT')`)
                         setValue(pemasok.nama_pemasok)
-                        modal.find(".modal-body form").attr("action", `{{ url('pemasoks') }}/${idPemasok}`)
+                        modal.find(".modal-body form").attr("action", `{{ url('/pemasoks') }}/${idPemasok}`)
                     default:
                         break;
                 }

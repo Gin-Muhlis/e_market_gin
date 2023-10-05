@@ -115,7 +115,7 @@
 
                         setValue(modal)
 
-                        modal.find(".modal-body form").attr("action", "/barangs")
+                        modal.find(".modal-body form").attr("action", "{{ url('/barangs') }}")
                         break;
                     case "edit":
                         const object = JSON.stringify(@json($barangs))

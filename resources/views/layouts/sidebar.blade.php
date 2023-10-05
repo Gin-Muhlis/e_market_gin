@@ -76,83 +76,9 @@
                             </a>
                         </li>
                     @endcan
-                    {{-- @can('view-any', App\Models\TampungBayar::class)
-                        <li class="nav-item">
-                            <a href="{{ route('tampung-bayars.index') }}" class="nav-link">
-                                <i class="nav-icon icon ion-md-radio-button-off"></i>
-                                <p>Tampung Bayar</p>
-                            </a>
-                        </li>
-                    @endcan
-                    @can('view-any', App\Models\DetailPenjualan::class)
-                        <li class="nav-item">
-                            <a href="{{ route('detail-penjualans.index') }}" class="nav-link">
-                                <i class="nav-icon icon ion-md-radio-button-off"></i>
-                                <p>Detail Penjualan</p>
-                            </a>
-                        </li>
-                    @endcan
-                    @can('view-any', App\Models\DetailTransaksi::class)
-                        <li class="nav-item">
-                            <a href="{{ route('detail-transaksis.index') }}" class="nav-link">
-                                <i class="nav-icon icon ion-md-radio-button-off"></i>
-                                <p>Detail Transaksi</p>
-                            </a>
-                        </li>
-                    @endcan
-                    @can('view-any', App\Models\JenisPembayaran::class)
-                        <li class="nav-item">
-                            <a href="{{ route('jenis-pembayarans.index') }}" class="nav-link">
-                                <i class="nav-icon icon ion-md-radio-button-off"></i>
-                                <p>Jenis Pembayaran</p>
-                            </a>
-                        </li>
-                    @endcan
+               
 
-
-                   
-                    @can('view-any', App\Models\Penjualan::class)
-                        <li class="nav-item">
-                            <a href="{{ route('penjualans.index') }}" class="nav-link">
-                                <i class="nav-icon icon ion-md-radio-button-off"></i>
-                                <p>Penjualan</p>
-                            </a>
-                        </li>
-                    @endcan
-
-                    @can('view-any', App\Models\Rombel::class)
-                        <li class="nav-item">
-                            <a href="{{ route('rombels.index') }}" class="nav-link">
-                                <i class="nav-icon icon ion-md-radio-button-off"></i>
-                                <p>Rombel</p>
-                            </a>
-                        </li>
-                    @endcan
-                    @can('view-any', App\Models\Transaksi::class)
-                        <li class="nav-item">
-                            <a href="{{ route('transaksis.index') }}" class="nav-link">
-                                <i class="nav-icon icon ion-md-radio-button-off"></i>
-                                <p>Transaksi</p>
-                            </a>
-                        </li>
-                    @endcan --}}
-
-
-                    {{-- <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon icon ion-md-apps"></i>
-                        <p>
-                            Apps
-                            <i class="nav-icon right icon ion-md-arrow-round-back"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                          
-                         
-                    </ul>
-                </li> --}}
-
-                    {{-- @if (Auth::user()->can('view-any', Spatie\Permission\Models\Role::class) || Auth::user()->can('view-any', Spatie\Permission\Models\Permission::class))
+                    @if (Auth::user()->can('view-any', Spatie\Permission\Models\Role::class) || Auth::user()->can('view-any', Spatie\Permission\Models\Permission::class))
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon icon ion-md-key"></i>
@@ -181,7 +107,7 @@
                                 @endcan
                             </ul>
                         </li>
-                    @endif --}}
+                    @endif
                 @endauth
 
                 @auth

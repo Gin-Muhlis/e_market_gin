@@ -4,31 +4,12 @@
 <div class="container">
     <div class="searchbar mt-0 mb-4">
         <div class="row">
-            <div class="col-md-6">
-                <form>
-                    <div class="input-group">
-                        <input
-                            id="indexSearch"
-                            type="text"
-                            name="search"
-                            placeholder="{{ __('crud.common.search') }}"
-                            value="{{ $search ?? '' }}"
-                            class="form-control"
-                            autocomplete="off"
-                        />
-                        <div class="input-group-append">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="icon ion-md-search"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="col-md-6 text-right">
-                @can('create', App\Models\User::class)
-                <a href="{{ route('users.create') }}" class="btn btn-primary">
-                    <i class="icon ion-md-add"></i> @lang('crud.common.create')
-                </a>
+            <div class="col-md-12 text-left">
+                @can('create', App\Models\Pelanggan::class)
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#form-modal"
+                        data-mode="add">
+                        <i class="icon ion-md-add"></i> Tambah
+                    </button>
                 @endcan
             </div>
         </div>
@@ -41,7 +22,7 @@
             </div>
 
             <div class="table-responsive">
-                <table class="table table-borderless table-hover">
+                <table class="table table-borderless table-hover" id="myTable">
                     <thead>
                         <tr>
                             <th class="text-left">
@@ -67,33 +48,21 @@
                                     class="btn-group"
                                 >
                                     @can('update', $user)
-                                    <a href="{{ route('users.edit', $user) }}">
-                                        <button
-                                            type="button"
-                                            class="btn btn-light"
-                                        >
+                                    <button type="button" class="btn btn-light" data-bs-toggle="modal"
+                                            data-bs-target="#form-modal" data-mode="edit"
+                                            data-id="{{ $user->id }}">
                                             <i class="icon ion-md-create"></i>
                                         </button>
-                                    </a>
-                                    @endcan @can('view', $user)
-                                    <a href="{{ route('users.show', $user) }}">
-                                        <button
-                                            type="button"
-                                            class="btn btn-light"
-                                        >
-                                            <i class="icon ion-md-eye"></i>
-                                        </button>
-                                    </a>
                                     @endcan @can('delete', $user)
                                     <form
                                         action="{{ route('users.destroy', $user) }}"
                                         method="POST"
-                                        onsubmit="return confirm('{{ __('crud.common.are_you_sure') }}')"
+                                      
                                     >
                                         @csrf @method('DELETE')
                                         <button
                                             type="submit"
-                                            class="btn btn-light text-danger"
+                                            class="btn btn-light text-danger delete-btn"
                                         >
                                             <i class="icon ion-md-trash"></i>
                                         </button>
@@ -111,13 +80,71 @@
                         @endforelse
                     </tbody>
                     <tfoot>
-                        <tr>
-                            <td colspan="3">{!! $users->render() !!}</td>
-                        </tr>
-                    </tfoot>
                 </table>
             </div>
         </div>
     </div>
 </div>
+@include('app.users.form-inputs')
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            const object = JSON.stringify(@json($users))
+            const data = JSON.parse(object)
+
+            $("#form-modal").on("show.bs.modal", event => {
+                const btn = $(event.relatedTarget)
+                const modal = $(this)
+                let mode = $(btn).data("mode")
+                switch (mode) {
+                    case "add":
+                        console.log("add")
+                        modal.find(".modal-title").text("Tambah Data User")
+                        modal.find("#method").html("")
+                        setValue()
+                        modal.find(".modal-body form").attr("action", `{{ url('/users') }}`)
+                        break;
+                    case "edit":
+                        const idUser = btn.data("id")
+                        const user = data.find(item => item.id == idUser)
+                        modal.find(".modal-title").text("Edit Data User")
+                        modal.find("#method").html(`@method('PUT')`)
+                        setValue(user.name, user.email, user.roles[0])
+                        modal.find(".modal-body form").attr("action", `{{ url('/users') }}/${idUser}`)
+                    default:
+                        break;
+                }
+            })
+
+            $(".delete-btn").on("click", event => {
+                event.preventDefault()
+                const nama = $(this).data("nama")
+                Swal.fire({
+                    title: `Apakah data <span style="color: red;"></span> akan dihapus?`,
+                    text: "Data tidak bisa dikembalikan!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#dd3333",
+                    confirmButtonText: "Ya, hapus data ini"
+                }).then(result => {
+                    if (result.isConfirmed)
+                        $(event.target).closest("form").submit()
+                    else Swal.close()
+                })
+            })
+
+            function setValue(name = "", email = "", role = "") {
+                const modalForm = $("#form-modal")
+                console.log(role)
+                modalForm.find("#name").val(name)
+                modalForm.find("#email").val(email)
+                modalForm.find(`#role${role.id}`).prop('checked', 'checked')
+
+                return true
+            }
+        })
+    </script>
+@endpush

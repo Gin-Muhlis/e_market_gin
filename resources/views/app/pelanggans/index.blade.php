@@ -65,7 +65,7 @@
                                                 @can('delete', $pelanggan)
                                                 <form action="{{ route('pelanggans.destroy', $pelanggan) }}" method="POST">
                                                     @csrf @method('DELETE')
-                                                    <button <button type="submit" class="btn btn-light text-danger delete-btn">
+                                                    <button type="submit" class="btn btn-light text-danger delete-btn">
                                                         <i class="icon ion-md-trash"></i>
                                                     </button>
                                                 </form>
@@ -105,7 +105,7 @@
                         modal.find(".modal-title").text("Tambah Data Pelanggan")
                         modal.find("#method").html("")
                         setValue()
-                        modal.find(".modal-body form").attr("action", `{{ url('pelanggans') }}`)
+                        modal.find(".modal-body form").attr("action", `{{ url('/pelanggans') }}`)
                         break;
                     case "edit":
                         const idPelanggan = btn.data("id")
@@ -113,7 +113,7 @@
                         modal.find(".modal-title").text("Edit Data Pelanggan")
                         modal.find("#method").html(`@method('PUT')`)
                         setValue(pelanggan.kode_pelanggan, pelanggan.nama, pelanggan.alamat, pelanggan.no_telp, pelanggan.email)
-                        modal.find(".modal-body form").attr("action", `{{ url('pelanggans') }}/${idPelanggan}`)
+                        modal.find(".modal-body form").attr("action", `{{ url('/pelanggans') }}/${idPelanggan}`)
                     default:
                         break;
                 }
